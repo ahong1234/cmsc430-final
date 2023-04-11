@@ -1,6 +1,8 @@
-// Compiler Theory and Design
+// CMSC 430
 // Dr. Duane J. Jarc
-
+// Alex Hong 
+// CMSC 430 Project 2
+// Due : 04/11/23
 // This file contains the bodies of the functions that produces the compilation
 // listing
 

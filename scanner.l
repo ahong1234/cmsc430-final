@@ -3,8 +3,8 @@
    Modified by Alex Hong
    Due: 04/11/23
    CMSC430
-   */
-   
+   Implemented changes specified by the requirements for project 2.
+*/
 /* This file contains flex input file */
 
 %{
