@@ -1,0 +1,6 @@
+-- Function with 1 error
+
+function bad a: returns integer;
+    c: real is 3.1;
+    b: boolean is true;
+begin 
