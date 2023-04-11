@@ -1,0 +1,18 @@
+-- Function with or/not operators
+-- No parameters
+-- Nested ifs
+
+function hello returns integer;
+    a: integer is 10;
+    b: integer is 2;
+begin
+    if a * b = 20 or a / b = 5 then 
+        if a - b = 8 then
+            a + b ** 2;
+        else
+            a + b rem 23;
+        endif;
+    else
+        not true and not not false;
+    endif;
+end;

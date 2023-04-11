@@ -1,0 +1,18 @@
+-- Function with a Real Variable and Boolean and Real Literals
+-- Function with 2 parameters
+-- Function with multiple variables initialized
+-- Function with If/Else statement
+
+function main a: integer, b: integer returns boolean;
+    c: integer is 11;
+    d: real is 5.E3;
+    e: real is 3.1;
+begin
+    if a < b and a < c then
+        b >= c;
+    else
+        a > c;
+    endif;
+end;
+
+        
