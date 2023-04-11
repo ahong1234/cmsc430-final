@@ -1,0 +1,10 @@
+-- Function with 1 error
+
+function main returns boolean;
+    a: integer is 9
+begin 
+    if a > 10 then
+        a ** 2;
+    else
+        not false;
+end;
