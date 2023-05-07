@@ -40,7 +40,7 @@ Symbols<Types> symbols;
 %token ARROW CASE ELSE ENDCASE ENDIF IF OTHERS REAL THEN WHEN 
 
 %type <type> type statement statement_ reductions expression relation term
-	factor primary and exponent unary
+	factor primary and exponent not
 
 %%
 
@@ -139,11 +139,11 @@ factor:
 	;
 
 exponent:
-	unary |
-	unary EXPOP primary {$$ = checkArithmetic($1, $3);};
+	not |
+	not EXPOP primary {$$ = checkArithmetic($1, $3);};
 
-unary:
-	NOTOP primary |
+not:
+	NOTOP not {$$ = checkLogical($2, BOOL_TYPE);} |
 	primary
 	;
 
