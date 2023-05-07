@@ -60,3 +60,11 @@ Types checkInt(Types left, Types right) {
 		return MISMATCH;
 	return INT_TYPE;
 }
+
+types checkifElse(Types expression) {
+	if (expression != BOOL_TYPE) {
+			appendError(GENERAL_SEMANTIC, "Boolean Type Required");
+			return MISMATCH;
+		}
+	return BOOL_TYPE;	
+}
