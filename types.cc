@@ -62,7 +62,7 @@ Types checkInt(Types left, Types right) {
 }
 
 types checkifElse(Types expression) {
-	if (expression != BOOL_TYPE) {
+	if (express != BOOL_TYPE) {
 			appendError(GENERAL_SEMANTIC, "Boolean Type Required");
 			return MISMATCH;
 		}
