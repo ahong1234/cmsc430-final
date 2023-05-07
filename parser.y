@@ -40,7 +40,7 @@ Symbols<Types> symbols;
 %token ARROW CASE ELSE ENDCASE ENDIF IF OTHERS REAL THEN WHEN 
 
 %type <type> type statement statement_ reductions expression relation term
-	factor primary and exponent
+	factor primary and exponent unary
 
 %%
 
@@ -59,7 +59,8 @@ optional_variable:
 	;
 
 variable:
-	IDENTIFIER ':' type IS statement_ 
+	IDENTIFIER ':' type IS statement_ {checkAssignment($3, $5, "Variable Initialization");
+		symbols.insert($1, $3);}
 	| error ';' 
 	;
 
@@ -116,7 +117,7 @@ expression:
 	| and ;
 
 and:
-	and ANDOP relation 
+	and ANDOP relation {$$ = checkLogical($1, $3);}
 	| relation
 	;
 
@@ -135,20 +136,13 @@ factor:
 	exponent 
 	;
 
-exponent: 
-	exponent EXPOP unary
-	| exponent '(' unary ')'
-	| unary
-	;
+exponent:
+	unary |
+	unary EXPOP primary {$$ = checkArithmetic($1, $3);};
 
-unary: 
-	not primary 
-	| primary
-	;
-
-not: // recursive not
-	not NOTOP 
-	| NOTOP
+unary:
+	NOTOP primary |
+	primary
 	;
 
 primary:
