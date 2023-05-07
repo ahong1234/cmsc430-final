@@ -80,7 +80,9 @@ parameter:
 
 type:
 	INTEGER {$$ = INT_TYPE;} |
-	BOOLEAN {$$ = BOOL_TYPE;} ;
+	BOOLEAN {$$ = BOOL_TYPE;} |
+	REAL {$$ = REAL_TYPE;}
+	;
 
 body:
 	BEGIN_ statement_ END ';' ;
