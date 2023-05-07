@@ -13,4 +13,4 @@ Types checkArithmetic(Types left, Types right);
 Types checkLogical(Types left, Types right);
 Types checkRelational(Types left, Types right);
 Types checkInt(Types left, Types right);
-Types checkIfElse(Types left, Types right);
+Types checkIf(Types express);
