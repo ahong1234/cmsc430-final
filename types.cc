@@ -23,7 +23,7 @@ Types checkArithmetic(Types left, Types right)
 		return MISMATCH;
 	if (left == BOOL_TYPE || right == BOOL_TYPE)
 	{
-		appendError(GENERAL_SEMANTIC, "Integer Type Required");
+		appendError(GENERAL_SEMANTIC, "Numeric Type Required");
 		return MISMATCH;
 	}
 	if ((left == REAL_TYPE && right == INT_TYPE) || (left == INT_TYPE && right == REAL_TYPE))
