@@ -63,8 +63,8 @@ not			{ ECHO; return(NOTOP); }
 rem			{ ECHO; return(REMOP); }
 true		{ ECHO; return(BOOL_LITERAL); }
 false		{ ECHO; return(BOOL_LITERAL); }
-{id}		{ ECHO; return(IDENTIFIER); }
-{int}		{ ECHO; return(INT_LITERAL); }
+{id}		{ ECHO; yylval.iden = (CharPtr)malloc(yyleng + 1); strcpy(yylval.iden, yytext); return(IDENTIFIER);}
+{int}		{ ECHO; yylval.type = INT_TYPE; return(INT_LITERAL); }
 {realliteral}	{ECHO; return(REAL_LITERAL); }
 {punc}		{ ECHO; return(yytext[0]); }
 .		{ ECHO; appendError(LEXICAL, yytext); }
