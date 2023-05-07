@@ -51,3 +51,12 @@ Types checkRelational(Types left, Types right)
 		return MISMATCH;
 	return BOOL_TYPE;
 }
+
+Types checkInt(Types left, Types right) {
+	if (left == MISMATCH || right == MISMATCH)
+		return MISMATCH;
+	if(left != INT_TYPE || right != INT_TYPE)
+		appendError(GENERAL_SEMANTIC, "Remainder Operator Requires Integer Operands")
+		return MISMATCH;
+	return INT_TYPE;
+}
