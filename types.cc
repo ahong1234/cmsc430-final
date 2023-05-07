@@ -26,6 +26,8 @@ Types checkArithmetic(Types left, Types right)
 		appendError(GENERAL_SEMANTIC, "Integer Type Required");
 		return MISMATCH;
 	}
+	if ((left == REAL_TYPE && right == INT_TYPE) || (left == INT_TYPE && right == REAL_TYPE))
+        return REAL_TYPE;
 	return INT_TYPE;
 }
 
