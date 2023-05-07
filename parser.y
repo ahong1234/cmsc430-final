@@ -134,7 +134,7 @@ term:
       
 factor:
 	factor MULOP exponent {$$ = checkArithmetic($1, $3);}|
-	factor REMOP exponent |
+	factor REMOP exponent {$$ = checkInt($1, $3);}|
 	exponent 
 	;
 
