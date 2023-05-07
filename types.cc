@@ -61,8 +61,8 @@ Types checkInt(Types left, Types right) {
 	return INT_TYPE;
 }
 
-Types checkif(Types express) {
-	if (express != BOOL_TYPE) {
+Types checkIf(Types ifCheck) {
+	if (ifCheck != BOOL_TYPE) {
 			appendError(GENERAL_SEMANTIC, "Boolean Type Required");
 			return MISMATCH;
 		}
