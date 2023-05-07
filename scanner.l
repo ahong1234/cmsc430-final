@@ -1,10 +1,6 @@
 /* Compiler Theory and Design
-   Dr. Duane J. Jarc 
-   Modified by Alex Hong
-   Due: 04/11/23
-   CMSC430
-   Implemented changes specified by the requirements for project 2.
-*/
+   Duane J. Jarc */
+
 /* This file contains flex input file */
 
 %{
@@ -13,6 +9,7 @@
 
 using namespace std;
 
+#include "types.h"
 #include "listing.h"
 #include "tokens.h"
 

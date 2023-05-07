@@ -1,38 +1,46 @@
 /* Compiler Theory and Design
-   Dr. Duane J. Jarc 
-   Modified by Alex Hong
-   Due: 04/11/23
-   CMSC430
-   Modified parser.y to support multiple variables, multiple optional 
-   parameters in the function header, error handling and other
-   requirements specified by the requirements for project 2.
-   */
+   Duane J. Jarc */
 
 %{
 
 #include <string>
+#include <vector>
+#include <map>
 
 using namespace std;
 
+#include "types.h"
 #include "listing.h"
+#include "symbols.h"
 
 int yylex();
 void yyerror(const char* message);
+
+Symbols<Types> symbols;
 
 %}
 
 %error-verbose
 
+
+
+%union
+{
+	CharPtr iden;
+	Types type;
+}
+
 %token IDENTIFIER
 %token INT_LITERAL BOOL_LITERAL REAL_LITERAL
 
+
+
 %token ADDOP MULOP RELOP ANDOP REMOP OROP EXPOP NOTOP
-
 %token BEGIN_ BOOLEAN END ENDREDUCE FUNCTION INTEGER IS REDUCE RETURNS
-
 %token ARROW CASE ELSE ENDCASE ENDIF IF OTHERS REAL THEN WHEN 
 
-
+%type <type> type statement statement_ reductions expression relation term
+	factor primary
 
 %%
 
