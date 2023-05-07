@@ -30,8 +30,8 @@ Symbols<Types> symbols;
 	Types type;
 }
 
-%token IDENTIFIER
-%token INT_LITERAL BOOL_LITERAL REAL_LITERAL
+%token <iden> IDENTIFIER
+%token <type> INT_LITERAL BOOL_LITERAL REAL_LITERAL
 
 
 
@@ -40,7 +40,7 @@ Symbols<Types> symbols;
 %token ARROW CASE ELSE ENDCASE ENDIF IF OTHERS REAL THEN WHEN 
 
 %type <type> type statement statement_ reductions expression relation term
-	factor primary
+	factor primary and exponent
 
 %%
 
@@ -78,20 +78,19 @@ parameter:
 	;
 
 type:
-	INTEGER |
-	REAL |
-	BOOLEAN ;
+	INTEGER {$$ = INT_TYPE;} |
+	BOOLEAN {$$ = BOOL_TYPE;} ;
 
 body:
 	BEGIN_ statement_ END ';' ;
     
 statement_:
-	statement ';' 
-	| error ';' ;
+	statement ';' |
+	error ';' {$$ = MISMATCH;} ;
 	
 statement:
 	expression 
-	| REDUCE operator reductions ENDREDUCE
+	| REDUCE operator reductions ENDREDUCE {$$ = $3;}
 	| IF expression THEN statement_ ELSE statement_ ENDIF 
 	| CASE expression IS case OTHERS ARROW statement_ ENDCASE 
 	 ;
@@ -108,12 +107,12 @@ operator:
 	;
 
 reductions:
-	reductions statement_
-	| 
+	reductions statement_ {$$ = checkArithmetic($1, $2);}
+	| {$$ = INT_TYPE;}
 	;
 		    
 expression:
-	expression OROP and
+	expression OROP and {$$ = checkLogical($1, $3);}
 	| and ;
 
 and:
@@ -122,16 +121,16 @@ and:
 	;
 
 relation:
-	relation RELOP term |
+	relation RELOP term {$$ = checkRelational($1, $3);}|
 	term
 	;
 
 term:
-	term ADDOP factor |
+	term ADDOP factor {$$ = checkArithmetic($1, $3);}|
 	factor ;
       
 factor:
-	factor MULOP exponent |
+	factor MULOP exponent {$$ = checkArithmetic($1, $3);}|
 	factor REMOP exponent |
 	exponent 
 	;
@@ -153,11 +152,11 @@ not: // recursive not
 	;
 
 primary:
-	'(' expression ')' |
+	'(' expression ')' {$$ = $2;}|
 	INT_LITERAL | 
 	REAL_LITERAL |
 	BOOL_LITERAL | 
-	IDENTIFIER 
+	IDENTIFIER {if (!symbols.find($1, $$)) appendError(UNDECLARED, $1);}
 	;
     
 %%
