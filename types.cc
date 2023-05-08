@@ -52,6 +52,14 @@ Types checkRelational(Types left, Types right)
 	return BOOL_TYPE;
 }
 
+Types checkNot(Types type) {
+	if (type != BOOL_TYPE)
+		appendError(GENERAL_SEMANTIC, "Boolean Type Required");
+		return MISMATCH;
+	return BOOL_TYPE;
+}
+
+
 Types checkInt(Types left, Types right) {
 	if (left == MISMATCH || right == MISMATCH)
 		return MISMATCH;
@@ -68,3 +76,4 @@ Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult) 
 		appendError(GENERAL_SEMANTIC, "If Expression Must Be Boolean");
 		return MISMATCH;
 }
+

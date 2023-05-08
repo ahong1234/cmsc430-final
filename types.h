@@ -12,5 +12,6 @@ void checkAssignment(Types lValue, Types rValue, string message);
 Types checkArithmetic(Types left, Types right);
 Types checkLogical(Types left, Types right);
 Types checkRelational(Types left, Types right);
+Types checkNot(Types type);
 Types checkInt(Types left, Types right);
-Types checkIf(Types ifCheck);
+Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult);
