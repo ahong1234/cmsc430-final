@@ -143,7 +143,7 @@ exponent:
 	not EXPOP primary {$$ = checkArithmetic($1, $3);};
 
 not:
-	NOTOP not {$$ = checkLogical($2, BOOL_TYPE);} |
+	NOTOP not {$$ = checkNot($2);} | 
 	primary
 	;
 
