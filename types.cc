@@ -78,22 +78,12 @@ Types checkInt(Types left, Types right) {
 	return INT_TYPE;
 }
 
-Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult) {
-	if (ifStatement == MISMATCH || ifResult == MISMATCH || elseResult == MISMATCH) {
-		return MISMATCH;
-	}
+void checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult) {
 	if (ifStatement != BOOL_TYPE) {  // the IF condition needs to be a boolean type
-		appendError(GENERAL_SEMANTIC, "If Expression Must Be Boolean");
-		return MISMATCH;
+		appendError(GENERAL_SEMANTIC, "If Expression Must Be Boolean");	
 	}
-	if (ifResult == INT_TYPE && elseResult == INT_TYPE) { // the if and else blocks must return same type
-		return INT_TYPE;
+	if (ifResult != elseResult) { // the if and else blocks must return same type
+		appendError(GENERAL_SEMANTIC, "If-Then Type Mismatch"); // throw error if types do not match
 	}
-	if (ifResult == REAL_TYPE && elseResult == REAL_TYPE) { // the if and else blocks must return same type
-		return REAL_TYPE;
-	}
-	appendError(GENERAL_SEMANTIC, "If-Then Type Mismatch"); // throw error if types do not match
-	return MISMATCH;
-	
 }
 

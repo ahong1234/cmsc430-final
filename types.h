@@ -14,4 +14,4 @@ Types checkLogical(Types left, Types right);
 Types checkRelational(Types left, Types right);
 Types checkNot(Types type);
 Types checkInt(Types left, Types right);
-Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult);
+void checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult);

@@ -1,5 +1,6 @@
 /* Compiler Theory and Design
-   Duane J. Jarc */
+   Duane J. Jarc 
+*/
 
 %{
 
@@ -8,7 +9,7 @@
 #include <map>
 
 using namespace std;
-
+#include <iostream>
 #include "types.h"
 #include "listing.h"
 #include "symbols.h"
@@ -22,8 +23,6 @@ Symbols<Types> symbols;
 
 %error-verbose
 
-
-
 %union
 {
 	CharPtr iden;
@@ -32,20 +31,17 @@ Symbols<Types> symbols;
 
 %token <iden> IDENTIFIER
 %token <type> INT_LITERAL BOOL_LITERAL REAL_LITERAL
-
-
-
 %token ADDOP MULOP RELOP ANDOP REMOP OROP EXPOP NOTOP
 %token BEGIN_ BOOLEAN END ENDREDUCE FUNCTION INTEGER IS REDUCE RETURNS
 %token ARROW CASE ELSE ENDCASE ENDIF IF OTHERS REAL THEN WHEN 
 
 %type <type> type statement statement_ reductions expression relation term
-	factor primary and exponent not
+	factor primary and exponent not function_header body
 
 %%
 
 function:	
-	function_header optional_variable body 
+	function_header optional_variable body {cout << "expected: " << $1 << " actual: " << $3 << endl; }
 	;
 	
 function_header:	
@@ -94,7 +90,7 @@ statement_:
 statement:
 	expression 
 	| REDUCE operator reductions ENDREDUCE {$$ = $3;}
-	| IF expression THEN statement_ ELSE statement_ ENDIF {$$ = checkIfElseStatement($2, $4, $6); }
+	| IF expression THEN statement_ ELSE statement_ ENDIF {checkIfElseStatement($2, $4, $6); }
 	| CASE expression IS case OTHERS ARROW statement_ ENDCASE 
 	 ;
 
