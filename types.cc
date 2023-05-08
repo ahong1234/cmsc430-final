@@ -109,3 +109,8 @@ void checkReturns(Types actual) {
 	
 }
 
+void checkExpression(Types caseExpression) {
+	if (caseExpression != INT_TYPE) {
+		appendError(GENERAL_SEMANTIC, "Case Expression Not Integer");
+	}
+}

@@ -36,7 +36,7 @@ Symbols<Types> symbols;
 %token ARROW CASE ELSE ENDCASE ENDIF IF OTHERS REAL THEN WHEN 
 
 %type <type> type statement statement_ reductions expression relation term
-	factor primary and exponent not function_header body variable
+	factor primary and exponent not function_header body variable case
 
 %%
 
@@ -56,7 +56,7 @@ optional_variable:
 
 variable:
 	IDENTIFIER ':' type IS statement_ {checkAssignment($3, $5, "Variable Initialization");
-		symbols.insert($1, $3);}
+		if (!symbols.find($1, $3)) symbols.insert($1, $3); else {appendError(DUPLICATE_IDENTIFIER, $1);};}
 	| error ';' {$$ = MISMATCH;}
 	;
 
@@ -91,11 +91,11 @@ statement:
 	expression {$$ = $1;}
 	| REDUCE operator reductions ENDREDUCE {$$ = $3;}
 	| IF expression THEN statement_ ELSE statement_ ENDIF {$$ = checkIfElseStatement($2, $4, $6); }
-	| CASE expression IS case OTHERS ARROW statement_ ENDCASE 
+	| CASE expression  IS case OTHERS ARROW statement_ ENDCASE {checkExpression($2);}
 	 ;
 
 case: 
-	case WHEN INT_LITERAL ARROW statement_ 
+	case WHEN INT_LITERAL ARROW statement_ {$$ = $5;}
 	| error ';'
 	|
 	; 

@@ -17,3 +17,4 @@ Types checkInt(Types left, Types right);
 Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult);
 void getExpected(Types expected);
 void checkReturns(Types actual);
+void checkExpression(Types caseExpression);
