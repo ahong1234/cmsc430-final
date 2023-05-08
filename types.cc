@@ -53,7 +53,7 @@ Types checkRelational(Types left, Types right)
 }
 
 Types checkNot(Types type) {
-	if (type != BOOL_TYPE)
+	if (type != BOOL_TYPE) // the operand must be a boolean value
 		appendError(GENERAL_SEMANTIC, "Boolean Type Required");
 		return MISMATCH;
 	return BOOL_TYPE;
@@ -63,17 +63,28 @@ Types checkNot(Types type) {
 Types checkInt(Types left, Types right) {
 	if (left == MISMATCH || right == MISMATCH)
 		return MISMATCH;
-	if(left != INT_TYPE || right != INT_TYPE)
+	if(left != INT_TYPE || right != INT_TYPE) // check to see if "left" and "right" are integer type
 		appendError(GENERAL_SEMANTIC, "Remainder Operator Requires Integer Operands");
 		return MISMATCH;
 	return INT_TYPE;
 }
 
 Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult) {
-	if (ifStatement == MISMATCH || ifResult == MISMATCH || elseResult == MISMATCH)
+	if (ifStatement == MISMATCH || ifResult == MISMATCH || elseResult == MISMATCH) {
 		return MISMATCH;
-	if (ifStatement != BOOL_TYPE)
+	}
+	if (ifStatement != BOOL_TYPE) {  // the IF condition needs to be a boolean type
 		appendError(GENERAL_SEMANTIC, "If Expression Must Be Boolean");
 		return MISMATCH;
+	}
+	if (ifResult == INT_TYPE && elseResult == INT_TYPE) { // the if and else blocks must return same type
+		return INT_TYPE;
+	}
+	if (ifResult == REAL_TYPE && elseResult == REAL_TYPE) { // the if and else blocks must return same type
+		return REAL_TYPE;
+	}
+	appendError(GENERAL_SEMANTIC, "If-Then Type Mismatch"); // throw error if types do not match
+	return MISMATCH;
+	
 }
 
