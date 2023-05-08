@@ -5,11 +5,13 @@
 
 #include <string>
 #include <vector>
-
+#include <iostream>
 using namespace std;
 
 #include "types.h"
 #include "listing.h"
+Types expectedType;
+
 
 void checkAssignment(Types lValue, Types rValue, string message)
 {	
@@ -78,12 +80,32 @@ Types checkInt(Types left, Types right) {
 	return INT_TYPE;
 }
 
-void checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult) {
+Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult) { 
 	if (ifStatement != BOOL_TYPE) {  // the IF condition needs to be a boolean type
 		appendError(GENERAL_SEMANTIC, "If Expression Must Be Boolean");	
 	}
 	if (ifResult != elseResult) { // the if and else blocks must return same type
 		appendError(GENERAL_SEMANTIC, "If-Then Type Mismatch"); // throw error if types do not match
 	}
+	return ifResult; // if the if and else block have the same return types then return the if block's type
+	
+}
+
+void getExpected(Types expected) {
+	expectedType = expected;
+}
+
+void checkReturns(Types actual) { 
+	// cout << "expected: " << expectedType << "\nactual: " << actual << endl;
+	if (expectedType == INT_TYPE && actual == REAL_TYPE) {
+		appendError(GENERAL_SEMANTIC, "Illegal Narrowing Function Return\n");
+	}
+	if (expectedType == BOOL_TYPE && actual != expectedType) {
+		appendError(GENERAL_SEMANTIC, "Type Mismatch on Function Return\n");
+	}
+	if (actual == BOOL_TYPE && expectedType != actual) {
+		appendError(GENERAL_SEMANTIC, "Type Mismatch on Function Return\n");
+	}
+	
 }
 

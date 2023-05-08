@@ -36,17 +36,17 @@ Symbols<Types> symbols;
 %token ARROW CASE ELSE ENDCASE ENDIF IF OTHERS REAL THEN WHEN 
 
 %type <type> type statement statement_ reductions expression relation term
-	factor primary and exponent not function_header body
+	factor primary and exponent not function_header body variable
 
 %%
 
 function:	
-	function_header optional_variable body {cout << "expected: " << $1 << " actual: " << $3 << endl; }
+	function_header optional_variable body {checkReturns($3);}
 	;
 	
 function_header:	
-	FUNCTION IDENTIFIER optional_parameters RETURNS type ';' 
-	| error ';'
+	FUNCTION IDENTIFIER optional_parameters RETURNS type ';' {getExpected($5);} // EXPECTED RETURN
+	| error ';' {$$ = MISMATCH;}
 	;
 
 optional_variable:
@@ -57,7 +57,7 @@ optional_variable:
 variable:
 	IDENTIFIER ':' type IS statement_ {checkAssignment($3, $5, "Variable Initialization");
 		symbols.insert($1, $3);}
-	| error ';' 
+	| error ';' {$$ = MISMATCH;}
 	;
 
 optional_parameters:
@@ -81,16 +81,16 @@ type:
 	;
 
 body:
-	BEGIN_ statement_ END ';' ;
+	BEGIN_ statement_ END ';' {$$ = $2;};
     
 statement_:
-	statement ';' |
+	statement ';' {$$ = $1;} |
 	error ';' {$$ = MISMATCH;} ;
 	
 statement:
-	expression 
+	expression {$$ = $1;}
 	| REDUCE operator reductions ENDREDUCE {$$ = $3;}
-	| IF expression THEN statement_ ELSE statement_ ENDIF {checkIfElseStatement($2, $4, $6); }
+	| IF expression THEN statement_ ELSE statement_ ENDIF {$$ = checkIfElseStatement($2, $4, $6); }
 	| CASE expression IS case OTHERS ARROW statement_ ENDCASE 
 	 ;
 

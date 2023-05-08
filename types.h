@@ -14,4 +14,6 @@ Types checkLogical(Types left, Types right);
 Types checkRelational(Types left, Types right);
 Types checkNot(Types type);
 Types checkInt(Types left, Types right);
-void checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult);
+Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult);
+void getExpected(Types expected);
+void checkReturns(Types actual);
