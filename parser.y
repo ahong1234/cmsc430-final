@@ -94,7 +94,7 @@ statement_:
 statement:
 	expression 
 	| REDUCE operator reductions ENDREDUCE {$$ = $3;}
-	| IF expression {$$ = checkIf($2);} THEN statement_ ELSE statement_ ENDIF 
+	| IF expression THEN statement_ ELSE statement_ ENDIF {$$ = checkIfElse($2, $4, $6); }
 	| CASE expression IS case OTHERS ARROW statement_ ENDCASE 
 	 ;
 

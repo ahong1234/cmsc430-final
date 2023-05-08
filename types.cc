@@ -61,10 +61,10 @@ Types checkInt(Types left, Types right) {
 	return INT_TYPE;
 }
 
-Types checkIf(Types ifCheck) {
-	if (ifCheck != BOOL_TYPE) {
-			appendError(GENERAL_SEMANTIC, "Boolean Type Required");
-			return MISMATCH;
-		}
-	return BOOL_TYPE;	
+Types checkIfElseStatement(Types ifStatement, Types ifResult, Types elseResult) {
+	if (ifStatement == MISMATCH || ifResult == MISMATCH || elseResult == MISMATCH)
+		return MISMATCH;
+	if (ifStatement != BOOL_TYPE)
+		appendError(GENERAL_SEMANTIC, "If Expression Must Be Boolean");
+		return MISMATCH;
 }
