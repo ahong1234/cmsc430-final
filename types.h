@@ -1,8 +1,10 @@
-// Compiler Theory and Design
-// Duane J. Jarc
-
-// This file contains type definitions and the function
-// prototypes for the type checking functions
+/*  
+	Compiler Theory and Design
+    Duane J. Jarc 
+    Alex Hong 
+	CMSC 430 Project 4
+	Due : 5/9/23
+*/
 
 typedef char* CharPtr;
 

@@ -1,7 +1,10 @@
-// Compiler Theory and Design
-// Duane J. Jarc
-
-// This file contains the bodies of the type checking functions
+/*  
+	Compiler Theory and Design
+    Duane J. Jarc 
+    Alex Hong 
+	CMSC 430 Project 4
+	Due : 5/9/23
+*/
 
 #include <string>
 #include <vector>

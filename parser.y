@@ -1,5 +1,9 @@
-/* Compiler Theory and Design
-   Duane J. Jarc 
+/*  
+	Compiler Theory and Design
+    Duane J. Jarc 
+    Alex Hong 
+	CMSC 430 Project 4
+	Due : 5/9/23
 */
 
 %{
